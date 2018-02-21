@@ -15,7 +15,7 @@ const overrideCss = '.status-line { clear:both;} ' +
 
 // Default Options
 vstsCoverageStyles({
-    coverageDir: './example/py-pytest/htmlcov',
+    coverageDir: './example-py-pytest/htmlcov',
     pattern: '/**/*.html',
     fileEncoding: 'utf8',
     minifyOptions: {
