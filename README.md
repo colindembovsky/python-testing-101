@@ -4,3 +4,7 @@ This repository contains example projects for the
 from [Automation Panda](https://automationpanda.com/).
 Each folder in this repository is a separate example project.
 Please refer to each project's README for more information.
+
+# VSTS CI
+I used this repo to demonstrate running Python tests and code coverage in a VSTS build. For more
+information, read this [blog post](http://colinsalmcorner.com/post/using-vsts-to-test-python-code-with-code-coverage).
