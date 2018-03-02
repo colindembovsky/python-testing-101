@@ -34,11 +34,11 @@ def verify_answer(expected, answer, last_answer):
 def test_last_answer_init(calculator):
     assert calculator.last_answer == 0.0
 
-
+"""
 def test_add(calculator):
     answer = calculator.add(NUMBER_1, NUMBER_2)
     verify_answer(5.0, answer, calculator.last_answer)
-
+"""
 
 def test_subtract(calculator):
     answer = calculator.subtract(NUMBER_1, NUMBER_2)
