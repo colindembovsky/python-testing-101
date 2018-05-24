@@ -1,0 +1,48 @@
+name: 1.0$(Rev:.r)
+resources:
+- repo: self
+queue:
+  name: Hosted Linux Preview
+  demands: npm
+
+steps:
+- bash: |
+   curl -O https://bootstrap.pypa.io/get-pip.py
+   python get-pip.py
+   python -m pip install pytest
+   python -m pip install pytest-cov
+    
+  displayName: Install packages
+
+- bash: 'python -m pytest --junitxml=testresults.xml --cov=com --cov-report=xml --cov-report=html'
+  workingDirectory: 'example-py-pytest'
+  displayName: Run Tests
+
+- task: Npm@1
+  displayName: Install fix-styles package
+  inputs:
+    workingDir: '$(System.DefaultWorkingDirectory)/'
+    verbose: false
+
+- task: Npm@1
+  displayName: Fix styles
+  inputs:
+    command: custom
+    workingDir: '$(System.DefaultWorkingDirectory)/'
+    verbose: false
+    customCommand: 'run fix'
+
+- task: PublishTestResults@2
+  displayName: Publish Test Results testresults.xml
+  inputs:
+    testResultsFiles: testresults.xml
+    searchFolder: '$(System.DefaultWorkingDirectory)/example-py-pytest'
+  condition: succeededOrFailed()
+
+- task: PublishCodeCoverageResults@1
+  displayName: Publish code coverage from $(System.DefaultWorkingDirectory)/example-py-pytest/coverage.xml
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/example-py-pytest/coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/example-py-pytest/htmlcov'
+    additionalCodeCoverageFiles: '$(System.DefaultWorkingDirectory)/example-py-pytest/htmlcov/**/*.*'   
